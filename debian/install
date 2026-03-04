@@ -1,0 +1,3 @@
+wol-manager         usr/bin/
+wol-manager.desktop usr/share/applications/
+wol-manager.png     usr/share/pixmaps/

@@ -1,0 +1,12 @@
+Source: wol-manager
+Section: sonstige
+Priority: optional
+Maintainer: Nightworker <nightworker@guideos.de>
+Build-Depends: debhelper-compat (= 10)
+Standards-Version: 4.5.0
+Homepage: https://github.com/Nightworker-DE/wol_manager
+
+Package: wol-manager
+Architecture: all
+Depends: python3
+Description: Wake on Lan Manager

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=WOL Manager
+Name[de]=WOL Manager
+Comment=Wake on Lan
+Exec=wol-manager
+Icon=wol-manager
+Terminal=false
+Type=Application
+Categories=Sonstige;
+
+
+

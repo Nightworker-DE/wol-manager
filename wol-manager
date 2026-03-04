@@ -1,0 +1,125 @@
+#!/usr/bin/env python3
+# =======================================================================
+# Titel:  Linux-Video-Enkoder (GTK3 Port)
+# Version: 1.0 (WOL mit Kernel 6.8.0-101)
+# Autor: Nightworker / Adaptive UI: Gemini
+# =======================================================================
+import gi
+import json
+import os
+import subprocess
+import shutil
+
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+
+CONFIG_FILE = os.path.expanduser("~/.wol_config.json")
+
+class WoLApp(Gtk.Window):
+    def __init__(self):
+        super().__init__(title="WoL Manager (Bash-Bridge)")
+        self.set_border_width(15)
+        self.set_default_size(450, 300)
+
+        # 1. Prüfe ob 'nc' installiert ist
+        self.check_dependencies()
+
+        self.servers = self.load_config()
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        self.add(vbox)
+
+        self.grid = Gtk.Grid(column_spacing=10, row_spacing=10)
+        vbox.pack_start(self.grid, True, True, 0)
+
+        self.entries = []
+        for i in range(4):
+            lbl = Gtk.Label(label=f"Server {i+1}:")
+            name_ent = Gtk.Entry(placeholder_text="Name")
+            mac_ent = Gtk.Entry(placeholder_text="00:00:00:00:00:00")
+
+            name_ent.set_text(self.servers[i].get('name', ''))
+            mac_ent.set_text(self.servers[i].get('mac', ''))
+
+            self.grid.attach(lbl, 0, i, 1, 1)
+            self.grid.attach(name_ent, 1, i, 1, 1)
+            self.grid.attach(mac_ent, 2, i, 1, 1)
+
+            rb = Gtk.RadioButton.new_with_label(None, "Wählen") if i == 0 else \
+                 Gtk.RadioButton.new_with_label_from_widget(self.first_rb, "Wählen")
+            if i == 0: self.first_rb = rb
+
+            self.grid.attach(rb, 3, i, 1, 1)
+            self.entries.append((name_ent, mac_ent, rb))
+
+        hbtn_box = Gtk.Box(spacing=10)
+        vbox.pack_start(hbtn_box, False, False, 0)
+
+        save_btn = Gtk.Button(label="Speichern")
+        save_btn.connect("clicked", self.save_config)
+        hbtn_box.pack_start(save_btn, True, True, 0)
+
+        wake_btn = Gtk.Button(label="Einschalten")
+        wake_btn.connect("clicked", self.send_wol_bash)
+        hbtn_box.pack_start(wake_btn, True, True, 0)
+
+    def check_dependencies(self):
+        """Überprüft, ob netcat im Systempfad gefunden wird."""
+        if shutil.which("nc") is None:
+            dialog = Gtk.MessageDialog(
+                transient_for=self,
+                flags=0,
+                message_type=Gtk.MessageType.ERROR,
+                buttons=Gtk.ButtonsType.OK,
+                text="Netcat (nc) nicht gefunden!"
+            )
+            dialog.format_secondary_text(
+                "Das Tool 'netcat' ist für dieses Skript erforderlich.\n\n"
+                "Bitte installiere es mit:\n"
+                "sudo apt update && sudo apt install netcat-openbsd"
+            )
+            dialog.run()
+            dialog.destroy()
+
+    def load_config(self):
+        if os.path.exists(CONFIG_FILE):
+            try:
+                with open(CONFIG_FILE, 'r') as f:
+                    return json.load(f)
+            except: pass
+        return [{} for _ in range(4)]
+
+    def save_config(self, widget):
+        data = [{'name': n.get_text(), 'mac': m.get_text()} for n, m, r in self.entries]
+        with open(CONFIG_FILE, 'w') as f:
+            json.dump(data, f)
+        print("Konfiguration gespeichert.")
+
+    def send_wol_bash(self, widget):
+        selected_mac = ""
+        for name_ent, mac_ent, rb in self.entries:
+            if rb.get_active():
+                selected_mac = mac_ent.get_text().strip()
+                break
+
+        if not selected_mac:
+            return
+
+        mac_clean = selected_mac.replace(":", "")
+
+        # Exakter Nachbau deines Bash-Befehls
+        bash_command = (
+            f"echo -e $(echo $(printf 'f%.0s' {{1..12}}; "
+            f"printf '{mac_clean}%.0s' {{1..16}}) | sed -e 's/../\\\\x&/g') | "
+            f"nc -w1 -u -b 255.255.255.255 9"
+        )
+
+        try:
+            subprocess.run(bash_command, shell=True, check=True, executable='/bin/bash')
+            print(f"Befehl für {selected_mac} gesendet.")
+        except subprocess.CalledProcessError as e:
+            print(f"Fehler: {e}")
+
+win = WoLApp()
+win.connect("destroy", Gtk.main_quit)
+win.show_all()
+Gtk.main()
