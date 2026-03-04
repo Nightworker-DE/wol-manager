@@ -1,5 +1,6 @@
 # WOL-Manager
-`![Vorschau](screenshot.png)`
+<img width="516" height="332" alt="screenshot" src="https://github.com/user-attachments/assets/125bbcb7-5f59-4a2d-a5a9-6508b439b528" />
+
 Ein grafischer Wake-on-LAN (WoL) Manager für Linux Mint, entwickelt als Workaround für Probleme mit dem Kernel 6.8.0-100.
 
 ## Hintergrund
