@@ -1,0 +1,20 @@
+# nwol-manager
+
+Ein grafischer Wake-on-LAN (WoL) Manager für Linux Mint, entwickelt als Workaround für Probleme mit dem Kernel 6.8.0-100.
+
+## Hintergrund
+Seit dem Update auf Kernel 6.8.0-100 funktioniert Standard-WoL auf vielen Systemen nicht mehr zuverlässig. Dieses Tool nutzt eine spezifische Bash-Bridge via `netcat`, um das Magic Packet so zu senden, dass der Kernel es korrekt verarbeitet.
+
+## Features
+* **GTK3 Oberfläche**: Einfache und intuitive Bedienung.
+* **4 Server-Slots**: Speichere Namen und MAC-Adressen dauerhaft.
+* **Persistenz**: Die Daten werden in `~/.wol_config.json` gespeichert.
+* **Abhängigkeits-Check**: Prüft beim Start, ob `netcat` installiert ist.
+
+## Voraussetzungen
+Das Tool benötigt Python 3 und `netcat`. Unter Linux Mint/Ubuntu installierst du die Abhängigkeiten so:
+
+```bash
+sudo apt update
+sudo apt install python3-gi netcat-openbsd
+
