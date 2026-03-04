@@ -31,7 +31,7 @@ chmod +x wol_manager.py
 ```
 3. Starten
 ```bash
-./nwol_manager.py
+./wol_manager.py
 ```
 ### Option 2: Als Debian-Paket (Empfohlen)
 .deb Datei bauen
@@ -40,7 +40,7 @@ dpkg-buildpackage -us -uc
 ```
 Wenn du die .deb-Datei gebaut hast, installiere sie mit:
 ```bash
-sudo dpkg -i nwol-manager_1.0_all.deb
+sudo dpkg -i wol-manager_1.0_all.deb
 sudo apt install -f
 ```
 ### Nutzung
