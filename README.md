@@ -18,3 +18,8 @@ Das Tool benötigt Python 3 und `netcat`. Unter Linux Mint/Ubuntu installierst d
 sudo apt update
 sudo apt install python3-gi netcat-openbsd
 
+## Installation
+Option 1: Manuell (Skript)
+Repository klonen oder Skript herunterladen.
+
+Ausführbar machen:
