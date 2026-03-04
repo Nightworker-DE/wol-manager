@@ -20,10 +20,27 @@ sudo apt install python3-gi netcat-openbsd
 ```
 
 ## Installation
-Option 1: Manuell (Skript)
+### Option 1: Manuell (Skript)
 1. Repository klonen oder Skript herunterladen.
 2. Ausführbar machen:
 ```bash
 chmod +x wol_manager.py
 ```
+3. Starten
+```bash
+./nwol_manager.py
+```
+### Option 2: Als Debian-Paket (Empfohlen)
+Wenn du die .deb-Datei gebaut hast, installiere sie mit:
+```bash
+sudo dpkg -i nwol-manager_1.0_all.deb
+sudo apt install -f
+```
+### Nutzung
+1. Trage die Namen und MAC-Adressen deiner Server in die Felder ein.
 
+2. Klicke auf Speichern, um die Daten dauerhaft zu sichern.
+
+3. Wähle den gewünschten Server über den Radio-Button aus.
+
+3. Klicke auf Sende Magic Packet (via Bash), um den Server zu wecken.
