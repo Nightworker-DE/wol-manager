@@ -23,3 +23,6 @@ Option 1: Manuell (Skript)
 Repository klonen oder Skript herunterladen.
 
 Ausführbar machen:
+```nash
+chmod +x nwol_manager.py
+```
