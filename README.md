@@ -2,6 +2,8 @@
 
 Ein grafischer Wake-on-LAN (WoL) Manager für Linux Mint, entwickelt als Workaround für Probleme mit dem Kernel 6.8.0-100.
 
+<img width="496" height="326" alt="screenshot" src="https://github.com/user-attachments/assets/4228c147-f3d2-406d-b100-d7bf0d5b1ca7" />
+
 ## Hintergrund
 Seit dem Update auf Kernel 6.8.0-100 funktioniert Standard-WoL auf vielen Systemen nicht mehr zuverlässig. Dieses Tool nutzt eine spezifische Bash-Bridge via `netcat`, um das Magic Packet so zu senden, dass der Kernel es korrekt verarbeitet.
 
