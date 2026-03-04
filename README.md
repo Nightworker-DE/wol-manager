@@ -1,6 +1,7 @@
 # WOL-Manager
 
-Ein grafischer Wake-on-LAN (WoL) Manager für Linux Mint, entwickelt als Workaround für Probleme mit dem Kernel 6.8.0-100.
+Ein grafischer Wake-on-LAN (WoL) Manager für Linux Mint, entwickelt als Workaround für\ 
+Probleme ab dem Kernel 6.8.0-100.
 
 <img width="496" height="326" alt="screenshot" src="https://github.com/user-attachments/assets/4228c147-f3d2-406d-b100-d7bf0d5b1ca7" />
 
