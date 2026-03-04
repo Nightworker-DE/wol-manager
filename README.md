@@ -21,9 +21,8 @@ sudo apt install python3-gi netcat-openbsd
 
 ## Installation
 Option 1: Manuell (Skript)
-Repository klonen oder Skript herunterladen.
-
-Ausführbar machen:
+1. Repository klonen oder Skript herunterladen.
+2. Ausführbar machen:
 ```bash
 chmod +x wol_manager.py
 ```
